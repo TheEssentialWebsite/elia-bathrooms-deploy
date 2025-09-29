@@ -1,0 +1,43 @@
+# ---- HOSTINGER-OPTIMIZED REACT SPA ROUTING ----
+# Based on research from StackOverflow and Medium articles
+# for Hostinger shared hosting compatibility
+
+# Disable MultiViews (critical for Hostinger)
+Options -MultiViews
+
+# Primary React Router fallback method
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Don't rewrite the main index.html
+  RewriteRule ^index\.html$ - [L]
+  
+  # Don't rewrite files that exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  
+  # Redirect everything else to index.html
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Backup method for servers without mod_rewrite
+<IfModule !mod_rewrite.c>
+  FallbackResource /index.html
+</IfModule>
+
+# Error document fallback
+ErrorDocument 404 /index.html
+
+# MIME types for modern assets
+AddType image/webp .webp
+AddType image/avif .avif
+
+# Basic caching for performance
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/* "access plus 6 months"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
