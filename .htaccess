@@ -34,10 +34,10 @@ ErrorDocument 404 /index.html
 AddType image/webp .webp
 AddType image/avif .avif
 
-# Basic caching for performance
+# Basic caching for performance (DEVELOPMENT MODE - revert to longer cache after image updates)
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType image/* "access plus 6 months"
+  ExpiresByType image/* "access plus 1 minute"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
 </IfModule>
