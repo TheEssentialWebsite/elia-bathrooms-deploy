@@ -9,6 +9,14 @@ Options -MultiViews
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  DirectoryIndex index.html
+  
+  # Preserve diagnostic endpoints
+  RewriteRule ^deploy-info\.json$ - [L]
+  RewriteRule ^diagnostic\.html$ - [L]
+  
+  # Handle favicon - redirect to actual logo
+  RewriteRule ^favicon\.ico$ /images/backgrounds/ELIA%20Favicon.png [L]
   
   # Don't rewrite the main index.html
   RewriteRule ^index\.html$ - [L]
@@ -18,8 +26,12 @@ Options -MultiViews
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   
+  # Don't rewrite assets
+  RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|svg|woff|woff2|ttf|eot|ico|webp|mp4|webm|json|xml)$ [NC]
+  RewriteCond %{REQUEST_URI} !^/diagnostic\.html$
+  
   # Redirect everything else to index.html
-  RewriteRule . /index.html [L]
+  RewriteRule ^ index.html [L]
 </IfModule>
 
 # Backup method for servers without mod_rewrite
@@ -34,10 +46,29 @@ ErrorDocument 404 /index.html
 AddType image/webp .webp
 AddType image/avif .avif
 
-# Basic caching for performance (DEVELOPMENT MODE - revert to longer cache after image updates)
+# Advanced caching for performance
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType image/* "access plus 1 minute"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# Cache control headers with immutable flag for static assets
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|woff|woff2|ttf|eot|webp)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+    FileETag None
+  </FilesMatch>
+
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
 </IfModule>
