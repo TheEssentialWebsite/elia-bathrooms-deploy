@@ -45,6 +45,8 @@ ErrorDocument 404 /index.html
 # MIME types for modern assets
 AddType image/webp .webp
 AddType image/avif .avif
+AddType application/xml .xml
+AddType text/xml .xml
 
 # Advanced caching for performance
 <IfModule mod_expires.c>
@@ -69,6 +71,11 @@ AddType image/avif .avif
   </FilesMatch>
 
   <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+
+  <FilesMatch "\.(xml)$">
+    Header set Content-Type "application/xml; charset=utf-8"
     Header set Cache-Control "public, max-age=3600"
   </FilesMatch>
 </IfModule>
