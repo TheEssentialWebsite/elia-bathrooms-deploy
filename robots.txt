@@ -1,14 +1,45 @@
+# Google
 User-agent: Googlebot
-Disallow: /
+Allow: /
 
+# Bing
 User-agent: Bingbot
-Disallow: /
+Allow: /
 
+# Social Media Crawlers
 User-agent: Twitterbot
-Disallow: /
+Allow: /
 
 User-agent: facebookexternalhit
+Allow: /
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: OAI-ImageBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic (Claude browsing only, block training)
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
 Disallow: /
 
-User-agent: *
+# Common Crawl (block training corpora)
+User-agent: CCBot
 Disallow: /
+
+# Default - allow all others
+User-agent: *
+Allow: /
+
+Sitemap: https://eliabathroomdesigns.com/sitemap.xml
