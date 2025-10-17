@@ -21,6 +21,13 @@ Options -MultiViews
   # Don't rewrite the main index.html
   RewriteRule ^index\.html$ - [L]
   
+  # Serve pre-rendered HTML to known crawlers
+  RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator|whatsapp|GPTBot|ChatGPT-User|claude-web|PerplexityBot|Applebot|DuckDuckBot|Anthropic-AI) [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} (ia_archiver|SemanticScholar|IA_Archiver|Scrapy|Python-urllib|curl|wget|LightspeedSystemsCrawler) [NC]
+  RewriteCond %{REQUEST_URI} !^/index\.html$
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+  RewriteRule ^(.+)$ $1/index.html [L]
+  
   # Don't rewrite files that exist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
