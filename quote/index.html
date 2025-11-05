@@ -246,6 +246,15 @@
       }
     })();
     </script>
+    
+    <!-- Show static header only when JavaScript is disabled -->
+    <noscript>
+      <style>
+        #static-header {
+          display: block !important;
+        }
+      </style>
+    </noscript>
     <script type="module" crossorigin src="/assets/main-BSp1F0R6.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/main-XR5jA9rQ.css">
   </head>
@@ -255,7 +264,7 @@
     <a href="#main" class="skip-link" style="position:absolute;left:-9999px;z-index:999;padding:1em;background:#000;color:#fff;text-decoration:none;">Skip to content</a>
     
     <!-- Static header for crawlers - will be hidden by React -->
-    <header role="banner" id="static-header" style="display:block;">
+    <header role="banner" id="static-header" style="display:none;">
       <div style="max-width:1400px;margin:0 auto;padding:1rem;">
         <!-- Brand -->
         <div style="margin-bottom:1rem;">
