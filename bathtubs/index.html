@@ -228,6 +228,13 @@
     })();
     </script>
     
+    <!-- Hide React content until styles are ready, then fade in -->
+    <style>
+      #root > *:not(.elia-loader) { opacity: 0; }
+      #root.app-ready > * { opacity: 1; transition: opacity 0.3s ease-in; }
+      #root.app-ready > .elia-loader { display: none; }
+    </style>
+
     <!-- Show static header only when JavaScript is disabled -->
     <noscript>
       <style>
@@ -236,7 +243,7 @@
         }
       </style>
     </noscript>
-    <script type="module" crossorigin src="/assets/main-zI15Na-0.js"></script>
+    <script type="module" crossorigin src="/assets/main-COD4q8HR.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/main-OFJfKksq.css">
   
     <script type="application/ld+json">
